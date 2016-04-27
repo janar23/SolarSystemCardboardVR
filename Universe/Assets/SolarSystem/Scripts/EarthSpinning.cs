@@ -2,9 +2,9 @@
 using System.Collections;
 using UnityEngine.SceneManagement;
 
-public class RotationInOrbit : MonoBehaviour {
+public class EarthSpinning : MonoBehaviour {
 
-    float rotationSpeed = 50.0f;
+    public float rotationSpeed = 10.0f;
     int mercurySpeed = 10;
     int venusSpeed = 8;
     int earthSpeed = 7;
@@ -55,17 +55,13 @@ public class RotationInOrbit : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         transform.Rotate(0, rotationSpeed * Time.deltaTime, 0);
-        transform.position =
-                    RotatePointAroundPivot(transform.position,
-                           transform.parent.position,
-                           Quaternion.Euler(0, OrbitDegrees * Time.deltaTime * planetOrbitSpeed, 0));
     }
 
     public static Vector3 RotatePointAroundPivot(Vector3 point, Vector3 pivot, Quaternion angle)
     {
         return angle * (point - pivot) + pivot;
     }
-     
+
     void OnEnable()
     {
         Cardboard.SDK.OnTrigger += TriggerPulled;
@@ -81,9 +77,9 @@ public class RotationInOrbit : MonoBehaviour {
         Debug.Log("The trigger was pulled!");
         Scene scene = SceneManager.GetActiveScene();
         Debug.Log("Scene Name = " + scene.name);
-        if (scene.name == "SolarSystemOrbiting")
+        if (scene.name == "EarthFromMoon")
         {
-            SceneManager.LoadScene("EarthFromMoon");
-        }
+            SceneManager.LoadScene("SolarSystemInRow");
+        }      
     }
 }

@@ -13,3 +13,5 @@ EditorBuildSettings:
     path: Assets/Scenes/SolarSystemInRow.unity
   - enabled: 1
     path: Assets/Scenes/SolarSystemOrbiting.unity
+  - enabled: 1
+    path: Assets/Scenes/EarthFromMoon.unity

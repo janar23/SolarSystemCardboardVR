@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 
 public class Spinning : MonoBehaviour {
 
-    float rotationSpeed = 50.0f;
+    public float rotationSpeed = 50.0f;
     int mercurySpeed = 10;
     int venusSpeed = 8;
     int earthSpeed = 7;
