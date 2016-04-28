@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEngine.SceneManagement;
 using System;
 
-public class EarthSpinning : MonoBehaviour {
+public class MoonPhases : MonoBehaviour {
 
     public float rotationSpeed = 10.0f;
     int mercurySpeed = 10;
@@ -65,9 +65,9 @@ public class EarthSpinning : MonoBehaviour {
             Debug.Log("The trigger was pulled!");
             Scene scene = SceneManager.GetActiveScene();
             Debug.Log("Scene Name = " + scene.name);
-            if (scene.name == "EarthFromMoon")
+            if (scene.name == "MoonPhases")
             {
-                SceneManager.LoadScene("MoonPhases");
+                SceneManager.LoadScene("SolarSystemInRow");
             }
         }
     }

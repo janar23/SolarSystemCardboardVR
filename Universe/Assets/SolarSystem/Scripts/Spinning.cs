@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.SceneManagement;
+using System;
 
 public class Spinning : MonoBehaviour {
 
@@ -20,6 +21,9 @@ public class Spinning : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
+
+        Cardboard.Create();
+        Cardboard.SDK.BackButtonMode = Cardboard.BackButtonModes.Off;
         switch (planet)
         {
             case "mercury":
@@ -55,10 +59,17 @@ public class Spinning : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         transform.Rotate(0, rotationSpeed * Time.deltaTime, 0);
-        //transform.position =
-        //           RotatePointAroundPivot(transform.position,
-        //                   transform.parent.position,
-        //                   Quaternion.Euler(0, OrbitDegrees * Time.deltaTime * planetOrbitSpeed, 0));
+
+        if (Cardboard.SDK.Triggered)
+        {
+            Debug.Log("The trigger was pulled!");
+            Scene scene = SceneManager.GetActiveScene();
+            Debug.Log("Scene Name = " + scene.name);
+            if (scene.name == "SolarSystemInRow")
+            {
+                SceneManager.LoadScene("SolarSystemOrbiting");
+            }
+        }
     }
 
     public static Vector3 RotatePointAroundPivot(Vector3 point, Vector3 pivot, Quaternion angle)
@@ -66,24 +77,38 @@ public class Spinning : MonoBehaviour {
         return angle * (point - pivot) + pivot;
     }
 
-    void OnEnable()
-    {
-        Cardboard.SDK.OnTrigger += TriggerPulled;
-    }
+    //void OnEnable()
+    //{
+    //    try
+    //    {
+    //        Cardboard.SDK.OnTrigger += TriggerPulled;
+    //    }
+    //    catch (Exception e)
+    //    {
+    //        Debug.Log("Exception on enable : " + e.Message);
+    //    }
+    //}
 
-    void OnDisable()
-    {
-        Cardboard.SDK.OnTrigger -= TriggerPulled;
-    }
+    //void OnDisable()
+    //{
+    //    try
+    //    {
+    //        Cardboard.SDK.OnTrigger -= TriggerPulled;
+    //    }
+    //    catch (Exception e)
+    //    {
+    //        Debug.Log("Exception on disable : " + e.Message);
+    //    }
+    //}
 
-    void TriggerPulled()
-    {
-        Debug.Log("The trigger was pulled!");
-        Scene scene = SceneManager.GetActiveScene();
-        Debug.Log("Scene Name = " + scene.name);
-        if (scene.name == "SolarSystemInRow")
-        {
-            SceneManager.LoadScene("SolarSystemOrbiting");
-        }      
-    }
+    //void TriggerPulled()
+    //{
+    //    Debug.Log("The trigger was pulled!");
+    //    Scene scene = SceneManager.GetActiveScene();
+    //    Debug.Log("Scene Name = " + scene.name);
+    //    if (scene.name == "SolarSystemInRow")
+    //    {
+    //        SceneManager.LoadScene("SolarSystemOrbiting");
+    //    }      
+    //}
 }

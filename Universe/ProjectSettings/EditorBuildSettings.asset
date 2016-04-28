@@ -15,3 +15,5 @@ EditorBuildSettings:
     path: Assets/Scenes/SolarSystemOrbiting.unity
   - enabled: 1
     path: Assets/Scenes/EarthFromMoon.unity
+  - enabled: 1
+    path: Assets/Scenes/MoonPhases.unity

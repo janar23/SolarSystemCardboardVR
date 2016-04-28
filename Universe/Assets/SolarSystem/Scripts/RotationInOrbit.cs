@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.SceneManagement;
+using System;
 
 public class RotationInOrbit : MonoBehaviour {
 
@@ -20,6 +21,10 @@ public class RotationInOrbit : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
+
+        Cardboard.Create();
+        Cardboard.SDK.BackButtonMode = Cardboard.BackButtonModes.Off;
+
         switch (planet)
         {
             case "mercury":
@@ -51,39 +56,64 @@ public class RotationInOrbit : MonoBehaviour {
                 break;
         }
     }
-	
-	// Update is called once per frame
-	void Update () {
+
+
+    // Update is called once per frame
+    void Update () {
         transform.Rotate(0, rotationSpeed * Time.deltaTime, 0);
         transform.position =
                     RotatePointAroundPivot(transform.position,
                            transform.parent.position,
                            Quaternion.Euler(0, OrbitDegrees * Time.deltaTime * planetOrbitSpeed, 0));
+        if (Cardboard.SDK.Triggered)
+        {
+            Debug.Log("The trigger was pulled!");
+            Scene scene = SceneManager.GetActiveScene();
+            Debug.Log("Scene Name = " + scene.name);
+            if (scene.name == "SolarSystemOrbiting")
+            {
+                SceneManager.LoadScene("EarthFromMoon");
+            }
+        }
     }
 
     public static Vector3 RotatePointAroundPivot(Vector3 point, Vector3 pivot, Quaternion angle)
     {
         return angle * (point - pivot) + pivot;
     }
-     
-    void OnEnable()
-    {
-        Cardboard.SDK.OnTrigger += TriggerPulled;
-    }
 
-    void OnDisable()
-    {
-        Cardboard.SDK.OnTrigger -= TriggerPulled;
-    }
+    //void OnEnable()
+    //{
+    //    try
+    //    {
+    //        Cardboard.SDK.OnTrigger += TriggerPulled;
+    //    }
+    //    catch (Exception e)
+    //    {
+    //        Debug.Log("Exception on enable : " + e.Message);
+    //    }
+    //}
 
-    void TriggerPulled()
-    {
-        Debug.Log("The trigger was pulled!");
-        Scene scene = SceneManager.GetActiveScene();
-        Debug.Log("Scene Name = " + scene.name);
-        if (scene.name == "SolarSystemOrbiting")
-        {
-            SceneManager.LoadScene("EarthFromMoon");
-        }
-    }
+    //void OnDisable()
+    //{
+    //    try
+    //    {
+    //        Cardboard.SDK.OnTrigger -= TriggerPulled;
+    //    }
+    //    catch (Exception e)
+    //    {
+    //        Debug.Log("Exception on disable : " + e.Message);
+    //    }
+    //}
+
+    //void TriggerPulled()
+    //{
+    //    Debug.Log("The trigger was pulled!");
+    //    Scene scene = SceneManager.GetActiveScene();
+    //    Debug.Log("Scene Name = " + scene.name);
+    //    if (scene.name == "SolarSystemOrbiting")
+    //    {
+    //        SceneManager.LoadScene("EarthFromMoon");
+    //    }
+    //}
 }
