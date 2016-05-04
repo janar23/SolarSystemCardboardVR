@@ -67,7 +67,7 @@ public class EarthSpinning : MonoBehaviour {
             Debug.Log("Scene Name = " + scene.name);
             if (scene.name == "EarthFromMoon")
             {
-                SceneManager.LoadScene("MoonPhases");
+                SceneManager.LoadScene("SolarSystemInRow");
             }
         }
     }
